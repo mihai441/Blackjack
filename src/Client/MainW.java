@@ -116,8 +116,8 @@ public class MainW extends javax.swing.JFrame {
                             for(int j=0;j<tempTableStructure.getPlayers().get(i).getPack().size();j++){
                                 setCardIcon(slots.get(i).getCards(), tempTableStructure.getPlayers().get(i).getPack().get(j), j);
                             }
-                        slots.get(i).setName(tempTableStructure.getPlayers().get(i).getName());
-                        }
+                            slots.get(i).setName(tempTableStructure.getPlayers().get(i).getName());
+                            }
                         for(int i=0;i<tempTableStructure.getDealerCards().size(); i++){
                             setCardIcon(dealerSlot.getCards(), tempTableStructure.getDealerCards().get(i), i);
                         }

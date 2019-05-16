@@ -118,7 +118,7 @@ public class Table1 {
     private void setActivePlayers(){
         activePlayers = new ArrayList<>();
         for(ServerClientThread clientThread: playerThreads)
-            if(clientThread.getPlayer().getTableSlot() != -1){
+            if(clientThread.getPlayer().getTableSlot() != -1 && clientThread.isConnectionAlive()){
                 activePlayers.add(clientThread.getPlayer().getId());
             }
     }
@@ -133,6 +133,9 @@ public class Table1 {
         for(int i=0;i<numOfPlayers();i++){
            playerThreads.get(i).setMessage(Constants.stakeRequest);
            String stake = playerThreads.get(i).getMessage();
+           if(stake.equals(null)){
+               stake = Integer.toString(0);
+           }
            playerThreads.get(i).getPlayer().setStake(Integer.parseInt(stake));
            if(Integer.parseInt(stake) <= 0){
                 for(Integer activePlayer : activePlayers){
@@ -339,7 +342,10 @@ public class Table1 {
         ArrayList<Player> currentPlayers = new ArrayList<>();
                     
         playerThreads.forEach((playerThread) -> {
-            currentPlayers.add(playerThread.getPlayer());
+            activePlayers.forEach((playerInteger) -> {
+                if(playerThread.getPlayer().getId() == playerInteger)
+                    currentPlayers.add(playerThread.getPlayer());
+            });
         });
 
         tableStructure.setPlayers(currentPlayers);
