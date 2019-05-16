@@ -133,17 +133,10 @@ public class Table1 {
         for(int i=0;i<numOfPlayers();i++){
            playerThreads.get(i).setMessage(Constants.stakeRequest);
            String stake = playerThreads.get(i).getMessage();
-           if(stake.equals(null)){
+           if(stake == null){
                stake = Integer.toString(0);
            }
            playerThreads.get(i).getPlayer().setStake(Integer.parseInt(stake));
-           if(Integer.parseInt(stake) <= 0){
-                for(Integer activePlayer : activePlayers){
-                    if(activePlayer.equals(playerThreads.get(i).getPlayer().getId())){
-                        activePlayers.remove(i);
-                    }
-                }    
-            }
         }
     }
     
