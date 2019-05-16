@@ -9,6 +9,7 @@ import Client.Design.DefaultTheme;
 import Client.Design.DyslexiaTheme;
 import Client.Design.ITheme;
 import Client.Design.Slot;
+import Client.Helpers.SoundManager;
 import Common.Constants;
 import Common.Player;
 import Common.Table;
@@ -50,6 +51,8 @@ public class MainW extends javax.swing.JFrame {
         this.themes = new Stack<>();
         this.themes.push(new DyslexiaTheme());
         this.themes.push(new DefaultTheme());
+        this.soundManager = new SoundManager();
+        
         initConnection();
         initComponents();
         initlabels();
@@ -513,6 +516,7 @@ public class MainW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
       private void jButtonHitActionPerformed(java.awt.event.ActionEvent evt) {
+          soundManager.playButtonClip();
           try{
             outToServer.writeUTF(Constants.ACTION_HIT);
             outToServer.flush();    
@@ -526,7 +530,8 @@ public class MainW extends javax.swing.JFrame {
       
       
       private void jButtonSwitchActionPerformed(java.awt.event.ActionEvent evt) {
-         if(themes.peek().getTheme() instanceof DefaultTheme){
+         soundManager.playButtonClip();
+        if(themes.peek().getTheme() instanceof DefaultTheme){
              themes.push(new DyslexiaTheme());
              updateFonts(true);
          }
@@ -568,6 +573,7 @@ public class MainW extends javax.swing.JFrame {
 
       
      private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        soundManager.playButtonClip();
         try {
             outToServer.writeUTF(Constants.ACTION_STAY);
             outToServer.flush();    
@@ -579,7 +585,7 @@ public class MainW extends javax.swing.JFrame {
         jButtonStop.setEnabled(false);
     }  
       private void jButtonSelectMizaPerformed(java.awt.event.ActionEvent evt) {                                         
-        
+        soundManager.playButtonClip();
           if(miza>banca)
               miza=banca;
         jButtonSelectMiza.setEnabled(false);
@@ -592,7 +598,8 @@ public class MainW extends javax.swing.JFrame {
         if (miza>10)
            miza-=10;
        updateAfis();
-    }           private void jButtonPlusActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    }
+   private void jButtonPlusActionPerformed(java.awt.event.ActionEvent evt) {                                         
         if (miza<banca)
             if(miza<200)
                 miza+=10;
@@ -637,6 +644,7 @@ public class MainW extends javax.swing.JFrame {
     private Socket socket;
     private ObjectOutputStream outToServer;
     private Stack<ITheme> themes;
+    private SoundManager soundManager;
 }
 
 
