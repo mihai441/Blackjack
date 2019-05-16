@@ -161,8 +161,11 @@ public class Table1 {
                             outToMainServer.flush();
                             playerThreads.get(i).setMessage(Constants.WIN);
                             playerThreads.get(i).getPlayer().setCredit(newCredit);
+                            Thread.sleep(100);
                             break;
                          } catch (IOException ex) {
+                             Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                         } catch (InterruptedException ex) {
                              Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
                          }
                      }
@@ -172,8 +175,13 @@ public class Table1 {
         else{
              for(Integer activePlayer : activePlayers){
                 for(int i=0;i<playerThreads.size();i++){
-                     if(playerThreads.get(i).getPlayer().getId() == activePlayer && !isBusted(i)){
-                         if(dealer.calculareValoare(playerThreads.get(i).getPlayer().getPack()) > dealer.calculareValoare(dealerCards)){
+                     if(playerThreads.get(i).getPlayer().getId() == activePlayer){
+                         
+                         //This means the user went over 21
+                         if(isBusted(i)){
+                            userLost(i);
+                         }
+                         else if(dealer.calculareValoare(playerThreads.get(i).getPlayer().getPack()) > dealer.calculareValoare(dealerCards)){
                             try {
                                 int newCredit = playerThreads.get(i).getPlayer().getCredit()+playerThreads.get(i).getPlayer().getStake();
                                 outToMainServer.writeUTF("NEWCREDIT" + ":" + newCredit + ":" +playerThreads.get(i).getPlayer().getId());
@@ -197,10 +205,6 @@ public class Table1 {
                          else{
                              userLost(i);
                          }
-                    }
-                    //This means the user went over 21
-                    else{
-                        userLost(i);
                     }
                 }
              }
