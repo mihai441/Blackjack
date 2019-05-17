@@ -14,7 +14,7 @@ import Common.Constants;
 import Common.Player;
 import Common.Table;
 import Common.TableStructure;
-import Server.Table1;
+import Server.TableServer;
 import main.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -97,7 +97,7 @@ public class MainW extends javax.swing.JFrame {
                             }
                         }
                         catch (IOException ex) {
-                            Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Table.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(MainW.class.getName()).log(Level.SEVERE, null, ex);
                         }

@@ -7,7 +7,7 @@ package Client;
 
 import Common.Constants;
 import Common.TableStructure;
-import Server.Table1;
+import Server.TableServer;
 import main.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

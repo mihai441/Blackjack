@@ -29,7 +29,7 @@ import main.*;
  *
  * @author AsX
  */
-public class Table1 {
+public class TableServer {
     
     private final int ID = 1;
     private final String ADRESS = "localhost";
@@ -51,7 +51,7 @@ public class Table1 {
     private ObjectInputStream inFromMainServer;
     private Socket s;
     
-    public Table1() {
+    public TableServer() {
         this.dealer = new Dealer();
         this.playerThreads = new ArrayList<>();
         this.positions = new ArrayList<>();
@@ -91,7 +91,7 @@ public class Table1 {
                       try {
                           Thread.sleep(700);
                       } catch (InterruptedException ex) {
-                          Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                          Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                       }
                       checkInputs();
                       showDealer();
@@ -104,7 +104,7 @@ public class Table1 {
                   try {
                       Thread.sleep(2500);
                   } catch (InterruptedException ex) {
-                      Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                      Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                   }
                   isRunning=false;
                   newRound=false;
@@ -160,9 +160,9 @@ public class Table1 {
                             Thread.sleep(100);
                             break;
                          } catch (IOException ex) {
-                             Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                             Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                          } catch (InterruptedException ex) {
-                             Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                             Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                          }
                      }
                 }    
@@ -188,10 +188,10 @@ public class Table1 {
                                 Thread.sleep(100);
                             } 
                             catch (IOException ex) {
-                                 Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                                 Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             catch (InterruptedException ex) {
-                                 Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                                 Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                             }
                          }
                          else if(dealer.calculareValoare(playerThreads.get(i).getPlayer().getPack()) == dealer.calculareValoare(dealerCards)){
@@ -209,7 +209,7 @@ public class Table1 {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         dealerCards.clear();
         forceUpdateTables();
@@ -224,7 +224,7 @@ public class Table1 {
             playerThreads.get(i).getPlayer().setCredit(newCredit);
             playerThreads.get(i).getPlayer().getPack().clear();
         } catch (IOException ex) {
-            Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -301,7 +301,7 @@ public class Table1 {
 //                    try {
 //                        Thread.sleep(100);
 //                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+//                        Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
 //                }
 //            }
@@ -317,7 +317,7 @@ public class Table1 {
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         while(dealer.calculareValoare(dealerCards) < TABLE_STAND_VALUE){
             dealer.getCarteDealer(pack, dealerCards, true);
@@ -325,7 +325,7 @@ public class Table1 {
             try {
                 Thread.sleep(800);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -402,7 +402,7 @@ public class Table1 {
             try {
                 s = new Socket(server, 5679);
             } catch (IOException ex) {
-                Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("Conexiunea cu serverul nu s-a putut realiza!");
             }
             System.out.println("Conexiunea cu serverul principal s-a realizat cu succes!");
@@ -420,7 +420,7 @@ public class Table1 {
                     }
                     outToMainServer.flush();
                 } catch (IOException ex) {
-                    Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             };}.start();
     }
@@ -467,7 +467,7 @@ public class Table1 {
                             }
                          }
                      } catch (ClassNotFoundException ex) {
-                         Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+                         Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
                      }
                  }
                  if(player.getTableSlot() != -1){
@@ -493,16 +493,16 @@ public class Table1 {
             Player newPlayer = new Player(receivedPlayer.getId(),receivedPlayer.getName(),receivedPlayer.getCredit());
             return newPlayer;
         } catch (IOException ex) {
-            Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Table1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
         
   public static void main(String[] args) throws IOException{
-    Table1 table = new Table1();
+    TableServer table = new TableServer();
     table.run();
     System.out.println("Masa a pornit");
     }
