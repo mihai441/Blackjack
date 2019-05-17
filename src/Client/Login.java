@@ -106,7 +106,7 @@ public class Login extends javax.swing.JFrame implements ActionListener {
             public void run() {
                 ObjectInputStream inFromServer = null;
                 try {
-                    socket = new Socket("localhost", 5678);
+                    socket = new Socket(SERVER_ADRESS, SERVER_PORT);
                     outToServer = new ObjectOutputStream(socket.getOutputStream());
 
                 } catch (IOException ex) {
@@ -114,22 +114,7 @@ public class Login extends javax.swing.JFrame implements ActionListener {
                 }
             }
         }.start();
-    }
- 
-    public static void updatebanca(int miza,String nume){
-     
-               try
-        {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/blackjack","root","");
-            PreparedStatement ps = con.prepareStatement("update users  set credit=? where nume=?");
-            ps.setInt(1, miza);
-            ps.setString(2, nume);
-            ps.executeUpdate();
-    }
-                catch (Exception ex)
-        {
-            System.out.println(ex);
-        }
+
     }
 
     /**
@@ -210,4 +195,6 @@ public class Login extends javax.swing.JFrame implements ActionListener {
     private ObjectOutputStream outToServer;
     private ObjectInputStream inFromServer;
     private Socket socket;
+    private final String SERVER_ADRESS = "localhost";
+    private final int SERVER_PORT = 5678;
 }

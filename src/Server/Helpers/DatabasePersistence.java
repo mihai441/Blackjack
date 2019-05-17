@@ -25,6 +25,12 @@ import java.util.logging.Logger;
 public class DatabasePersistence {
     
     private Connection connection;
+    private final String DB_ADRESS = "localhost" ;
+    private final String DB_PORT = "";
+    private final String DB_NAME = "blackjack";
+    private final String DB_USER = "root";
+    private final String DB_PASSWORD = "";
+    private final String USERS_TABLE_NAME = "users";
     
     public DatabasePersistence(){
      connectToDatabase();
@@ -32,7 +38,7 @@ public class DatabasePersistence {
     
     private void connectToDatabase(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/blackjack","root","");
+            connection = DriverManager.getConnection("jdbc:mysql://" + DB_ADRESS + "/" + DB_NAME + DB_PORT,DB_USER,DB_PASSWORD);
         } catch (SQLException ex) {
             Logger.getLogger(DatabasePersistence.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,7 +49,7 @@ public class DatabasePersistence {
         try {
             String hashedPassword = hashPassword(password,"SHA-256");
             
-            PreparedStatement ps = connection.prepareStatement("select * from users where nume=? and parola=?");
+            PreparedStatement ps = connection.prepareStatement("select * from " +USERS_TABLE_NAME + " where user=? and password=?");
             ps.setString(1, username);
             ps.setString(2, hashedPassword);
             ResultSet rs = ps.executeQuery();
@@ -51,7 +57,7 @@ public class DatabasePersistence {
             {
                 MainServerUser user = new MainServerUser();
                 user.setCredit(rs.getInt("credit"));
-                user.setName(rs.getString("nume"));
+                user.setName(rs.getString("user"));
                 user.setId(rs.getInt("id"));
                 return user;
             } 
