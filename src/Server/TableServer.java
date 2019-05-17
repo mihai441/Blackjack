@@ -403,9 +403,9 @@ public class TableServer {
                 s = new Socket(server, 5679);
             } catch (IOException ex) {
                 Logger.getLogger(TableServer.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Conexiunea cu serverul nu s-a putut realiza!");
+                System.out.println("There was an error connecting to the main server!");
             }
-            System.out.println("Conexiunea cu serverul principal s-a realizat cu succes!");
+            System.out.println("The main server connexion is now running!");
                 try {
                     outToMainServer = new ObjectOutputStream(s.getOutputStream());
                     if(inFromMainServer == null){
@@ -504,7 +504,7 @@ public class TableServer {
   public static void main(String[] args) throws IOException{
     TableServer table = new TableServer();
     table.run();
-    System.out.println("Masa a pornit");
+    System.out.println("Server Table is now running!");
     }
 
     private void initCards() {

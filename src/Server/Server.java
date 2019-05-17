@@ -54,7 +54,7 @@ class Server {
          Runnable serverTask = () -> {
              try {
                  ServerSocket server = new ServerSocket(PLAYERPORT);
-                 System.out.println("Serverul pentru playeri a pornit cu succes");
+                 System.out.println("Player server handler is now running!");
                  while (true) {
                           
                      final Socket client = server.accept();
@@ -152,7 +152,7 @@ class Server {
     void tableServers() {
         try {
             ServerSocket server = new ServerSocket(TABLEPORT);
-            System.out.println("Serverul pentru mese a pornit cu succes");
+            System.out.println("Table Server handler is now running!");
             while (true) {
                final Socket client = server.accept();
                new Thread() {
