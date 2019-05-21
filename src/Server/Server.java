@@ -191,7 +191,6 @@ class Server {
                                         int playerId = Integer.parseInt(splitRequest[2]);
                                         db.updateUserCredit(newCredit, playerId);
                                     }
-                                    
                                 }
                                 
                             } catch (ClassNotFoundException ex) {
